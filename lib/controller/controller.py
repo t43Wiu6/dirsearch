@@ -525,10 +525,13 @@ class Controller(object):
     # Write error to log file
     def append_error_log(self, path, error_msg):
         with self.threads_lock:
-            line = time.strftime("[%y-%m-%d %H:%M:%S] - ")
-            line += self.requester.base_url + self.base_path + self.current_directory + path + " - " + error_msg
-            self.error_log.write(os.linesep + line)
-            self.error_log.flush()
+            try:
+                line = time.strftime("[%y-%m-%d %H:%M:%S] - ")
+                line += self.requester.base_url + self.base_path + self.current_directory + path + " - " + error_msg
+                self.error_log.write(os.linesep + line)
+                self.error_log.flush()
+            except:
+                pass
 
     # Handle CTRL+C
     def handle_pause(self, message):
